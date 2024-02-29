@@ -44,6 +44,7 @@ export interface Collection {
   packagePriceFirst: boolean;
   onlineOnly: boolean;
   currency: string;
+  regular: { price: number };
   promotions: Promotion[];
   unitsInPacket?: number;
   unitName?: string;
@@ -74,10 +75,19 @@ const generatePraxisApi = (term: string) =>
 @Injectable()
 export class PraxisService {
   constructor(private readonly httpService: HttpService) { }
-  async search(term: string) {
+  async search(searchTerm: string) {
     const { data } = await firstValueFrom(
-      this.httpService.get<PraxisResponse>(generatePraxisApi(term)),
+      this.httpService.get<PraxisResponse>(generatePraxisApi(searchTerm)),
     );
-    return data.products;
+
+    console.log(data.products.collection);
+
+    return data.products.collection.map(({ title, image, regular }) => {
+      return {
+        title,
+        src: image,
+        price: regular.price,
+      };
+    });
   }
 }
