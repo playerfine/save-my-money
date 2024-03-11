@@ -1,21 +1,23 @@
 <script setup lang="ts">
-
 import { RouterLink, RouterView } from 'vue-router';
+import { useDark, useToggle } from '@vueuse/core';
+import ThemeToggle from '../components/ThemeToggle.vue';
 
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 </script>
 
 <template>
-  
-    <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </header>
-    <RouterView />
-  
+  <header>
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+      <button @click="toggleDark()">Mode</button>
+      <ThemeToggle />
+    </nav>
+  </header>
+  <RouterView />
 </template>
-
 
 <style scoped lang="css">
 header {
@@ -47,4 +49,3 @@ nav > a {
   }
 }
 </style>
-

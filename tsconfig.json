@@ -8,7 +8,7 @@
     "noImplicitAny": true,
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
   },
-  "extends": "./tsconfig.base.json"
+  "extends": "./tsconfig.base.json",
 }
