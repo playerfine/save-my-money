@@ -6,8 +6,12 @@ module.exports = {
       colors: {
         primary: 'hsla(var(--primary))',
         secondary: 'hsla(var(--secondary))',
-        blue_light: 'hsla(var(--blue-light))',
-        black: 'hsla(var(--black))',
+        blue: {
+          light: 'hsla(var(--blue-light))',
+          medium: 'hsla(var(--blue-medium))',
+          dark: 'hsla(var(--blue-dark))',
+        },
+        gray_light: 'hsla(var(--gray-light))',
         white: 'hsla(var(--white))',
       },
     },
