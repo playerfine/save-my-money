@@ -4,8 +4,9 @@ import puppeteer from 'puppeteer';
 @Injectable()
 export class GammaService {
   async search(searchTerm: string) {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     const [page] = await browser.pages();
+    console.log(searchTerm);
     await page.goto(
       `https://www.gamma.nl/assortiment/zoeken?text=${searchTerm}`,
     );

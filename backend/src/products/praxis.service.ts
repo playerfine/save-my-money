@@ -74,7 +74,7 @@ const generatePraxisApi = (term: string) =>
 
 @Injectable()
 export class PraxisService {
-  constructor(private readonly httpService: HttpService) { }
+  constructor(private readonly httpService: HttpService) {}
   async search(searchTerm: string) {
     const { data } = await firstValueFrom(
       this.httpService.get<PraxisResponse>(generatePraxisApi(searchTerm)),

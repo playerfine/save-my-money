@@ -7,7 +7,7 @@ export class ProductsService {
   constructor(
     private praxisService: PraxisService,
     private gammaService: GammaService,
-  ) { }
+  ) {}
 
   async search(searchTerm: string) {
     const productsPraxis = await this.praxisService.search(searchTerm);
