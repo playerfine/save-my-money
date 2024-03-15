@@ -3,6 +3,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontSize: {
+        xxs: '0.5rem',
+      },
       colors: {
         primary: 'hsla(var(--primary))',
         secondary: 'hsla(var(--secondary))',

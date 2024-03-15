@@ -69,6 +69,9 @@ export interface DisableStatus {
   isDisabled: boolean;
 }
 
+const generateImgUrl = (productId: string) =>
+  `https://d2fb1ew6v6wv87.cloudfront.net/products/${productId}/s01/424x424/origin.jpeg`;
+
 const generatePraxisApi = (term: string) =>
   `https://www.praxis.nl/search-service/rest/v3/praxis/nl/search?page=1&term=${term}&viewSize=24`;
 
@@ -80,13 +83,12 @@ export class PraxisService {
       this.httpService.get<PraxisResponse>(generatePraxisApi(searchTerm)),
     );
 
-    console.log(data.products.collection);
-
-    return data.products.collection.map(({ title, image, regular }) => {
+    return data.products.collection.map(({ title, image, regular, id }) => {
       return {
         title,
-        src: image,
+        src: generateImgUrl(id) || image,
         price: regular.price,
+        store: 'praxis',
       };
     });
   }

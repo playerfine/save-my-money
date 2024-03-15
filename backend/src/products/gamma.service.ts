@@ -30,7 +30,12 @@ export class GammaService {
         const price =
           (priceCurrent?.textContent ?? '') + (priceDecimal?.textContent ?? '');
 
-        return { title: titleElement?.textContent, src: imageSrc, price };
+        return {
+          title: titleElement?.textContent,
+          src: imageSrc,
+          price,
+          store: 'gamma',
+        };
       });
     });
 

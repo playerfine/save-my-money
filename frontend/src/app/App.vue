@@ -26,11 +26,12 @@ const { isLoading, data, refetch, isFetching } = useQuery({
 });
 
 async function search() {
-  animation.apply({
+  await animation.apply({
     opacity: 0,
     y: -30,
     transition: { duration: 300 },
   });
+
   hasResults.value = true;
   refetch();
 }
@@ -39,7 +40,6 @@ async function search() {
   <header class="flex justify-end items-end content-end">
     <ThemeToggle />
   </header>
-  jk
   <div v-if="!hasResults" class="container h-full flex mx-auto flex-col">
     <div class="flex justify-center w-full pt-72 max-w-xl self-center">
       <form class="w-full" @submit.prevent="search">
@@ -56,7 +56,7 @@ async function search() {
     >
       Search results for: {{ searchTerm }}
     </h1>
-    <div class="flex flex-wrap w-full gap-4">
+    <div class="flex flex-wrap w-full gap-8">
       <ProductCard
         ref="productsRefs"
         v-for="(product, index) in data"
