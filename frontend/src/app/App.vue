@@ -48,14 +48,19 @@ async function search() {
     </div>
   </div>
   <div class="container mx-auto pt-32" v-if="hasResults && !isFetching">
-    <h1
-      v-motion
-      :initial="{ x: -20, opacity: 0 }"
-      :enter="{ x: 0, opacity: 1 }"
-      class="text-3xl font-bold mb-16"
-    >
-      Search results for: {{ searchTerm }}
-    </h1>
+    <div class="flex justify-between">
+      <h1
+        v-motion
+        :initial="{ x: -20, opacity: 0 }"
+        :enter="{ x: 0, opacity: 1 }"
+        class="text-3xl font-bold mb-16"
+      >
+        Search results for: {{ searchTerm }}
+      </h1>
+      <button>
+        <vue-feather type="search"></vue-feather>
+      </button>
+    </div>
     <div class="flex flex-wrap w-full gap-8">
       <ProductCard
         ref="productsRefs"
