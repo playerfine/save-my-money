@@ -2,11 +2,11 @@
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle.vue';
 import SearchBox from '../components/SearchBox/SearchBox.vue';
 import ProductCard from '../components/ProductCard/ProductCard.vue';
+import Loader from '../components/Loader/Loader.vue';
 import { useMotion } from '@vueuse/motion';
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
-const hasResults = ref(false);
 const searchBox = ref();
 const productsRefs = ref([]);
 const searchTerm = ref('');
@@ -19,11 +19,13 @@ const getSearchResults = async (searchTerm: string) => {
   return response.json();
 };
 
-const { isLoading, data, refetch, isFetching } = useQuery({
+const { data, refetch, isFetching } = useQuery({
   queryKey: ['products'],
   queryFn: () => getSearchResults(searchTerm.value),
   enabled: false,
 });
+
+const hasResults = computed(() => data.value && data.value.length > 0);
 
 async function search() {
   await animation.apply({
@@ -32,7 +34,6 @@ async function search() {
     transition: { duration: 300 },
   });
 
-  hasResults.value = true;
   refetch();
 }
 </script>
@@ -41,10 +42,16 @@ async function search() {
     <ThemeToggle />
   </header>
   <div v-if="!hasResults" class="container h-full flex mx-auto flex-col">
-    <div class="flex justify-center w-full pt-72 max-w-xl self-center">
+    <div
+      v-if="!hasResults && !isFetching"
+      class="flex justify-center w-full pt-72 max-w-xl self-center"
+    >
       <form class="w-full" @submit.prevent="search">
         <SearchBox v-model="searchTerm" ref="searchBox" />
       </form>
+    </div>
+    <div v-if="isFetching" class="flex h-full justify-center items-center">
+      <Loader />
     </div>
   </div>
   <div class="container mx-auto pt-32" v-if="hasResults && !isFetching">
