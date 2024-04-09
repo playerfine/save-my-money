@@ -6,9 +6,12 @@ import Loader from '../components/Loader/Loader.vue';
 import { useMotion } from '@vueuse/motion';
 
 import { ref, computed } from 'vue';
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery, useQueryClient } from '@tanstack/vue-query';
+
+const queryClient = useQueryClient();
 const searchBox = ref();
 const productsRefs = ref([]);
+const productsContainer = ref();
 const searchTerm = ref('');
 const animation = useMotion(searchBox, { initial: { y: 0, opacity: 1 } });
 
@@ -35,6 +38,16 @@ async function search() {
   });
 
   refetch();
+}
+
+async function onSearchIconClicked() {
+  await queryClient.resetQueries({ queryKey: ['products'], exact: true });
+
+  await animation.apply({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 300 },
+  });
 }
 </script>
 <template>
@@ -64,11 +77,18 @@ async function search() {
       >
         Search results for: {{ searchTerm }}
       </h1>
-      <button>
+      <button @click="onSearchIconClicked">
         <vue-feather type="search"></vue-feather>
       </button>
     </div>
-    <div class="flex flex-wrap w-full gap-8">
+    <div
+      v-motion
+      :initial="{ opacity: 0 }"
+      :visible="{ opacity: 1 }"
+      :leave="{ opacity: 0 }"
+      ref="productsContainer"
+      class="flex flex-wrap w-full gap-8"
+    >
       <ProductCard
         ref="productsRefs"
         v-for="(product, index) in data"
